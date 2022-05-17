@@ -3,13 +3,14 @@ import Image from 'next/image';
 import { TextInput } from 'components/UI/TextInput';
 import { useState } from 'react';
 import { SubmitButton } from 'components/UI/SubmitButton';
+import { userCredentials } from 'lib/models/user';
 
 const Login: NextPage = () => {
-  const INITIAL_VALUES = {
+  const INITIAL_VALUES: userCredentials = {
     email: '',
     password: '',
   };
-  const [state, setState] = useState({
+  const [state, setState] = useState<userCredentials>({
     ...INITIAL_VALUES,
   });
 

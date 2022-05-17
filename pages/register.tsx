@@ -3,16 +3,20 @@ import Image from 'next/image';
 import { TextInput } from 'components/UI/TextInput';
 import { useState } from 'react';
 import { SubmitButton } from 'components/UI/SubmitButton';
+import { userRegister } from 'lib/models/user';
 
 const Register: NextPage = () => {
-  const [state, setState] = useState({
+  const INITIAL_VALUES: userRegister = {
     firstName: '',
     surNames: '',
     email: '',
     password: '',
-    passwordConfirmation: '',
+    confirmPassword: '',
     phone: '',
     address: '',
+  };
+  const [state, setState] = useState({
+    ...INITIAL_VALUES,
   });
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,6 +30,9 @@ const Register: NextPage = () => {
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(state);
+    setState({
+      ...INITIAL_VALUES,
+    });
   };
 
   return (
@@ -93,7 +100,7 @@ const Register: NextPage = () => {
                   label='Confirm password'
                   type='password'
                   placeholder='Confirm password'
-                  value={state.passwordConfirmation}
+                  value={state.confirmPassword}
                   onChange={handleChangeInput}
                 />
               </div>
