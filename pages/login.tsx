@@ -37,7 +37,7 @@ const Login: NextPage = () => {
           <div>
             <Image
               src={'/jobandtalent.png'}
-              alt={'jobandtalent'}
+              alt='jobandtalent'
               width={600}
               height={150}
               objectFit={'contain'}
