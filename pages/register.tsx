@@ -1,11 +1,11 @@
 import type { NextPage } from 'next';
 import Image from 'next/image';
-import { TextInput } from '../components/UI/TextInput';
+import { TextInput } from 'components/UI/TextInput';
 import { useState } from 'react';
-import { SubmitButton } from '../components/UI/SubmitButton';
+import { SubmitButton } from 'components/UI/SubmitButton';
 
 const Register: NextPage = () => {
-  const INITIAL_VALUES = {
+  const [state, setState] = useState({
     firstName: '',
     surNames: '',
     email: '',
@@ -13,9 +13,6 @@ const Register: NextPage = () => {
     passwordConfirmation: '',
     phone: '',
     address: '',
-  };
-  const [state, setState] = useState({
-    ...INITIAL_VALUES,
   });
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,9 +26,6 @@ const Register: NextPage = () => {
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(state);
-    setState({
-      ...INITIAL_VALUES,
-    });
   };
 
   return (

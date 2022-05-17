@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
 import Image from 'next/image';
-import { TextInput } from '../components/UI/TextInput';
+import { TextInput } from 'components/UI/TextInput';
 import { useState } from 'react';
-import { SubmitButton } from '../components/UI/SubmitButton';
+import { SubmitButton } from 'components/UI/SubmitButton';
 
 const Login: NextPage = () => {
   const INITIAL_VALUES = {
