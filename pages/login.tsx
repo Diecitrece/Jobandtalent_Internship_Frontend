@@ -72,7 +72,10 @@ const Login: NextPage = () => {
             </div>
 
             <div>
-              <SubmitButton text='Sign in' />
+              <SubmitButton
+                text='Sign in'
+                color='bg-gradient-to-r from-red-500/50'
+              />
             </div>
           </form>
         </div>
