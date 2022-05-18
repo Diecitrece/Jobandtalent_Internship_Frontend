@@ -1,4 +1,4 @@
-export type userRegister = {
+export type UserRegister = {
   firstName: string;
   surNames: string;
   email: string;
@@ -8,7 +8,7 @@ export type userRegister = {
   address: string;
 };
 
-export type userCredentials = {
+export type UserCredentials = {
   email: string;
   password: string;
 };

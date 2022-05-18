@@ -3,11 +3,11 @@ import Image from 'next/image';
 import { TextInput } from 'components/UI/TextInput';
 import { useState } from 'react';
 import { Button } from 'components/UI/Button';
-import { userRegister } from 'lib/models/user';
+import { UserRegister } from 'lib/models/user';
 import jobandtalent from 'public/jobandtalent.png';
 
 const Register: NextPage = () => {
-  const INITIAL_VALUES: userRegister = {
+  const INITIAL_VALUES: UserRegister = {
     firstName: '',
     surNames: '',
     email: '',
