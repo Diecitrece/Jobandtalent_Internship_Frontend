@@ -97,7 +97,7 @@ const Register: NextPage = () => {
               </div>
               <div>
                 <TextInput
-                  name='passwordConfirmation'
+                  name='confirmPassword'
                   label='Confirm password'
                   type='password'
                   placeholder='Confirm password'
