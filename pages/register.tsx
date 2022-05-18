@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Image from 'next/image';
 import { TextInput } from 'components/UI/TextInput';
 import { useState } from 'react';
-import { SubmitButton } from 'components/UI/SubmitButton';
+import { Button } from 'components/UI/Button';
 import { userRegister } from 'lib/models/user';
 import jobandtalent from 'public/jobandtalent.png';
 
@@ -127,7 +127,7 @@ const Register: NextPage = () => {
               </div>
             </div>
             <div>
-              <SubmitButton text='Sign up' />
+              <Button text='Sign up' />
             </div>
           </form>
         </div>

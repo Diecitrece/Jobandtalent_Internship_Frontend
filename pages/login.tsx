@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Image from 'next/image';
 import { TextInput } from 'components/UI/TextInput';
 import { useState } from 'react';
-import { SubmitButton } from 'components/UI/SubmitButton';
+import { Button } from 'components/UI/Button';
 import { userCredentials } from 'lib/models/user';
 
 const Login: NextPage = () => {
@@ -72,10 +72,7 @@ const Login: NextPage = () => {
             </div>
 
             <div>
-              <SubmitButton
-                text='Sign in'
-                color='bg-gradient-to-r from-red-500/50'
-              />
+              <Button text='Sign in' color='bg-gradient-to-r from-red-500/50' />
             </div>
           </form>
         </div>
