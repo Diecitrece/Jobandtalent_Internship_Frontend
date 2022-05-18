@@ -4,6 +4,7 @@ import { TextInput } from 'components/UI/TextInput';
 import { useState } from 'react';
 import { SubmitButton } from 'components/UI/SubmitButton';
 import { userRegister } from 'lib/models/user';
+import jobandtalent from 'public/jobandtalent.png';
 
 const Register: NextPage = () => {
   const INITIAL_VALUES: userRegister = {
@@ -41,7 +42,7 @@ const Register: NextPage = () => {
         <div className='max-w-md w-full space-y-8'>
           <div>
             <Image
-              src={'/jobandtalent.png'}
+              src={jobandtalent}
               alt={'jobandtalent'}
               width={600}
               height={150}
