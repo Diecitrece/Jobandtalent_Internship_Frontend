@@ -57,7 +57,7 @@ const Register: NextPage = () => {
     }
 
     if (type === TypeInput.PASSWORD) {
-      value.length < 0
+      value.length === 0
         ? dispatchInputValues({
             [name]: { error: 'Password cannot be empty' },
           })
@@ -65,7 +65,7 @@ const Register: NextPage = () => {
     }
 
     if (type === TypeInput.TEXT) {
-      value.length < 0
+      value.length === 0
         ? dispatchInputValues({
             [name]: { value, error: 'Field cannot be empty' },
           })
@@ -92,7 +92,7 @@ const Register: NextPage = () => {
 
   return (
     <>
-      {/* {JSON.stringify(inputValues)} */}
+      {JSON.stringify(inputValues)}
       <div className='min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
         <div className='max-w-md w-full space-y-8'>
           <div>
