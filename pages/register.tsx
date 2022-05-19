@@ -1,9 +1,9 @@
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import { TextInput } from 'components/UI/TextInput';
-import { useReducer, useState, useEffect } from 'react';
+import React, { useReducer } from 'react';
 import { Button } from 'components/UI/Button';
-import { UserRegister, UserRegisterAction } from 'lib/models/user';
+import { UserRegister } from 'lib/models/user';
 import jobandtalent from 'public/jobandtalent.png';
 
 const Register: NextPage = () => {
@@ -17,229 +17,82 @@ const Register: NextPage = () => {
     address: { value: '', error: '' },
   };
 
-  const reducer = (
-    state: UserRegister,
-    action: { type: string; payload: any }
-  ) => {
-    switch (action.type) {
-      case UserRegisterAction.FIRST_NAME_CHANGED:
-        return {
-          ...state,
-          firstName: { ...state.firstName, value: action.payload },
-        };
-      case UserRegisterAction.FIRST_NAME_ERROR:
-        return {
-          ...state,
-          firstName: { ...state.firstName, error: action.payload },
-        };
-      case UserRegisterAction.SUR_NAMES_CHANGED:
-        return {
-          ...state,
-          surNames: { ...state.surNames, value: action.payload },
-        };
-      case UserRegisterAction.SUR_NAMES_ERROR:
-        return {
-          ...state,
-          surNames: { ...state.surNames, error: action.payload },
-        };
-      case UserRegisterAction.EMAIL_CHANGED:
-        return { ...state, email: { ...state.email, value: action.payload } };
-      case UserRegisterAction.EMAIL_ERROR:
-        return { ...state, email: { ...state.email, error: action.payload } };
-      case UserRegisterAction.PASSWORD_CHANGED:
-        return {
-          ...state,
-          password: { ...state.password, value: action.payload },
-        };
-      case UserRegisterAction.PASSWORD_ERROR:
-        return {
-          ...state,
-          password: { ...state.password, error: action.payload },
-        };
-      case UserRegisterAction.CONFIRM_PASSWORD_CHANGED:
-        return {
-          ...state,
-          confirmPassword: { ...state.confirmPassword, value: action.payload },
-        };
-      case UserRegisterAction.CONFIRM_PASSWORD_ERROR:
-        return {
-          ...state,
-          confirmPassword: {
-            ...state.confirmPassword,
-            error: action.payload,
-          },
-        };
-      case UserRegisterAction.PHONE_CHANGED:
-        return { ...state, phone: { ...state.phone, value: action.payload } };
-      case UserRegisterAction.PHONE_ERROR:
-        return {
-          ...state,
-          phone: { ...state.phone, error: action.payload },
-        };
-      case UserRegisterAction.ADDRESS_CHANGED:
-        return {
-          ...state,
-          address: { ...state.address, value: action.payload },
-        };
-      case UserRegisterAction.ADDRESS_ERROR:
-        return {
-          ...state,
-          address: { ...state.address, error: action.payload },
-        };
-      default:
-        return state;
+  const [inputValues, dispatchInputValues] = useReducer(
+    (currentValue: UserRegister, newValue: any) => ({
+      ...currentValue,
+      ...newValue,
+    }),
+    INITIAL_VALUES
+  );
+
+  const enum TypeInput {
+    TEXT = 'text',
+    EMAIL = 'email',
+    PASSWORD = 'password',
+    TEL = 'tel',
+  }
+
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+    dispatchInputValues({ [name]: { value } });
+  };
+
+  const handleErrors = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name, type } = e.target;
+
+    if (type === TypeInput.EMAIL) {
+      !value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)
+        ? dispatchInputValues({ [name]: { value, error: 'Invalid email' } })
+        : dispatchInputValues({ [name]: { value, error: '' } });
     }
-  };
 
-  const [state, dispatch] = useReducer(reducer, INITIAL_VALUES);
-  const [disableButton, setDisableButton] = useState(true);
-
-  useEffect(() => {
-    if (
-      !state.firstName.value.error ||
-      !state.surNames.value.error ||
-      !state.email.value.error ||
-      !state.password.value.error ||
-      !state.confirmPassword.value.error ||
-      !state.phone.value.error ||
-      !state.address.value.error
-    ) {
-      setDisableButton(false);
-    } else {
-      setDisableButton(true);
+    if (type === TypeInput.TEL) {
+      !value.match(/^[0-9]{9,13}$/)
+        ? dispatchInputValues({
+            [name]: {
+              error: 'Phone numbers should be 9 or 13 digits in length only',
+            },
+          })
+        : dispatchInputValues({ [name]: { value, error: '' } });
     }
-  }, [state]);
 
-  const handleFirstName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
+    if (type === TypeInput.PASSWORD) {
+      value.length < 0
+        ? dispatchInputValues({
+            [name]: { error: 'Password cannot be empty' },
+          })
+        : dispatchInputValues({ [name]: { value, error: '' } });
+    }
 
-    value.length < 3
-      ? dispatch({
-          type: UserRegisterAction.FIRST_NAME_ERROR,
-          payload: '3 characters',
-        })
-      : dispatch({ type: UserRegisterAction.FIRST_NAME_ERROR, payload: '' });
-    dispatch({
-      type: UserRegisterAction.FIRST_NAME_CHANGED,
-      payload: value,
-    });
-  };
+    if (type === TypeInput.TEXT) {
+      value.length < 0
+        ? dispatchInputValues({
+            [name]: { value, error: 'Field cannot be empty' },
+          })
+        : dispatchInputValues({ [name]: { value, error: '' } });
+    }
 
-  const handleSurNames = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-
-    value.length < 3
-      ? dispatch({
-          type: UserRegisterAction.SUR_NAMES_ERROR,
-          payload: '3 characters',
-        })
-      : dispatch({ type: UserRegisterAction.SUR_NAMES_ERROR, payload: '' });
-
-    dispatch({
-      type: UserRegisterAction.SUR_NAMES_CHANGED,
-      payload: value,
-    });
-  };
-
-  const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-
-    !value.includes('@')
-      ? dispatch({
-          type: UserRegisterAction.EMAIL_ERROR,
-          payload: 'Invalid email',
-        })
-      : dispatch({ type: UserRegisterAction.EMAIL_ERROR, payload: '' });
-
-    dispatch({
-      type: UserRegisterAction.EMAIL_CHANGED,
-      payload: value,
-    });
-  };
-
-  const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-
-    value.length < 6
-      ? dispatch({
-          type: UserRegisterAction.PASSWORD_ERROR,
-          payload: 'Password must be at least 6 characters',
-        })
-      : dispatch({
-          type: UserRegisterAction.PASSWORD_ERROR,
-          payload: '',
-        });
-
-    dispatch({
-      type: UserRegisterAction.PASSWORD_CHANGED,
-      payload: value,
-    });
-  };
-
-  const handleConfirmPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-
-    value !== state.password.value && value.length > 0
-      ? dispatch({
-          type: UserRegisterAction.CONFIRM_PASSWORD_ERROR,
-          payload: 'Passwords must match',
-        })
-      : dispatch({
-          type: UserRegisterAction.CONFIRM_PASSWORD_ERROR,
-          payload: '',
-        });
-
-    dispatch({
-      type: UserRegisterAction.CONFIRM_PASSWORD_CHANGED,
-      payload: value,
-    });
-  };
-
-  const handlePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-
-    value.length > 0 && value.length < 10
-      ? dispatch({
-          type: UserRegisterAction.PHONE_ERROR,
-          payload: 'Phone must be at least 10 characters',
-        })
-      : dispatch({
-          type: UserRegisterAction.PHONE_ERROR,
-          payload: '',
-        });
-
-    dispatch({
-      type: UserRegisterAction.PHONE_CHANGED,
-      payload: value,
-    });
-  };
-
-  const handleAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-
-    value.length > 0 && value.length < 10
-      ? dispatch({
-          type: UserRegisterAction.ADDRESS_ERROR,
-          payload: 'Address must be at least 10 characters',
-        })
-      : dispatch({
-          type: UserRegisterAction.ADDRESS_ERROR,
-          payload: '',
-        });
-    dispatch({
-      type: UserRegisterAction.ADDRESS_CHANGED,
-      payload: value,
-    });
+    if (name === 'confirmPassword') {
+      value !== inputValues.password.value
+        ? dispatchInputValues({
+            [name]: { value, error: 'Passwords do not match' },
+          })
+        : dispatchInputValues({ [name]: { value, error: '' } });
+    }
   };
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(state);
+    console.log(inputValues);
   };
+
+  const disableButton = Object.values(inputValues).some(
+    (error: any) => error.length > 0
+  );
 
   return (
     <>
-      {/* {JSON.stringify(state)} */}
+      {/* {JSON.stringify(inputValues)} */}
       <div className='min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
         <div className='max-w-md w-full space-y-8'>
           <div>
@@ -263,12 +116,15 @@ const Register: NextPage = () => {
                   label='First name'
                   type='text'
                   placeholder='First name'
-                  value={state.firstName.value}
-                  onChange={handleFirstName}
+                  value={inputValues.firstName.value}
+                  onChange={handleChangeInput}
+                  onBlur={handleErrors}
                 />
               </div>
-              {state.firstName.error ? (
-                <div className='text-red-600'>{state.firstName.error}</div>
+              {inputValues.firstName.error ? (
+                <div className='text-red-600'>
+                  {inputValues.firstName.error}
+                </div>
               ) : null}
               <div>
                 <TextInput
@@ -276,12 +132,13 @@ const Register: NextPage = () => {
                   label='Surnames'
                   type='text'
                   placeholder='Surnames'
-                  value={state.surNames.value}
-                  onChange={handleSurNames}
+                  value={inputValues.surNames.value}
+                  onChange={handleChangeInput}
+                  onBlur={handleErrors}
                 />
               </div>
-              {state.surNames.error ? (
-                <div className='text-red-600'>{state.surNames.error}</div>
+              {inputValues.surNames.error ? (
+                <div className='text-red-600'>{inputValues.surNames.error}</div>
               ) : null}
               <div>
                 <TextInput
@@ -289,12 +146,13 @@ const Register: NextPage = () => {
                   label='Email address'
                   type='email'
                   placeholder='Email address'
-                  value={state.email.value}
-                  onChange={handleEmail}
+                  value={inputValues.email.value}
+                  onChange={handleChangeInput}
+                  onBlur={handleErrors}
                 />
               </div>
-              {state.email.error ? (
-                <div className='text-red-600'>{state.email.error}</div>
+              {inputValues.email.error ? (
+                <div className='text-red-600'>{inputValues.email.error}</div>
               ) : null}
               <div>
                 <TextInput
@@ -302,12 +160,13 @@ const Register: NextPage = () => {
                   label='Password'
                   type='password'
                   placeholder='Password'
-                  value={state.password.value}
-                  onChange={handlePassword}
+                  value={inputValues.password.value}
+                  onChange={handleChangeInput}
+                  onBlur={handleErrors}
                 />
               </div>
-              {state.password.error ? (
-                <div className='text-red-600'>{state.password.error}</div>
+              {inputValues.password.error ? (
+                <div className='text-red-600'>{inputValues.password.error}</div>
               ) : null}
               <div>
                 <TextInput
@@ -315,27 +174,29 @@ const Register: NextPage = () => {
                   label='Confirm password'
                   type='password'
                   placeholder='Confirm password'
-                  value={state.confirmPassword.value}
-                  onChange={handleConfirmPassword}
+                  value={inputValues.confirmPassword.value}
+                  onChange={handleChangeInput}
+                  onBlur={handleErrors}
                 />
               </div>
-              {state.confirmPassword.error ? (
+              {inputValues.confirmPassword.error ? (
                 <div className='text-red-600'>
-                  {state.confirmPassword.error}
+                  {inputValues.confirmPassword.error}
                 </div>
               ) : null}
               <div>
                 <TextInput
                   name='phone'
                   label='Phone'
-                  type='text'
+                  type='tel'
                   placeholder='Phone'
-                  value={state.phone.value}
-                  onChange={handlePhone}
+                  value={inputValues.phone.value}
+                  onChange={handleChangeInput}
+                  onBlur={handleErrors}
                 />
               </div>
-              {state.phone.error ? (
-                <div className='text-red-600'>{state.phone.error}</div>
+              {inputValues.phone.error ? (
+                <div className='text-red-600'>{inputValues.phone.error}</div>
               ) : null}
               <div>
                 <TextInput
@@ -343,17 +204,17 @@ const Register: NextPage = () => {
                   label='Address'
                   type='text'
                   placeholder='Address'
-                  value={state.address.value}
-                  onChange={handleAddress}
+                  value={inputValues.address.value}
+                  onChange={handleChangeInput}
+                  onBlur={handleErrors}
                 />
               </div>
-              {state.address.error ? (
-                <div className='text-red-600'>{state.address.error}</div>
+              {inputValues.address.error ? (
+                <div className='text-red-600'>{inputValues.address.error}</div>
               ) : null}
             </div>
             <div>
-              {/* if error button disabled */}
-              <Button text='Sign up' disabled={disableButton} />
+              <Button text='Sign up' />
             </div>
           </form>
         </div>

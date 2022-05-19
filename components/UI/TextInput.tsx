@@ -5,6 +5,7 @@ type Props = {
   placeholder: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
 };
 
 export const TextInput = ({
@@ -14,6 +15,7 @@ export const TextInput = ({
   placeholder,
   value,
   onChange,
+  onBlur,
 }: Props) => {
   return (
     <>
@@ -33,6 +35,7 @@ export const TextInput = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
       />
     </>
   );
