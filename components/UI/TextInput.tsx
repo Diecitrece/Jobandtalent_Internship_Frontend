@@ -4,6 +4,7 @@ type Props = {
   type: string;
   placeholder: string;
   value: string;
+  disabled?: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
 };
@@ -14,6 +15,7 @@ export const TextInput = ({
   type,
   placeholder,
   value,
+  disabled = false,
   onChange,
   onBlur,
 }: Props) => {
@@ -30,6 +32,7 @@ export const TextInput = ({
         name={name}
         type={type}
         autoComplete={type}
+        disabled={disabled}
         required
         className='appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
         placeholder={placeholder}

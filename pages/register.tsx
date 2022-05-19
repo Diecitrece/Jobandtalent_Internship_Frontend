@@ -173,10 +173,11 @@ const Register: NextPage = () => {
                   name='confirmPassword'
                   label='Confirm password'
                   type='password'
-                  placeholder='Confirm password'
+                  placeholder='Type your password before'
                   value={inputValues.confirmPassword.value}
                   onChange={handleChangeInput}
                   onBlur={handleErrors}
+                  disabled={inputValues.password.value === ''}
                 />
               </div>
               {inputValues.confirmPassword.error ? (
