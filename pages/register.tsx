@@ -86,8 +86,8 @@ const Register: NextPage = () => {
     console.log(inputValues);
   };
 
-  const disableButton = Object.values(inputValues).some(
-    (error: any) => error.length > 0
+  const disabledButton = Object.values(inputValues).some(
+    (value) => value.error
   );
 
   return (
@@ -215,7 +215,7 @@ const Register: NextPage = () => {
               ) : null}
             </div>
             <div>
-              <Button text='Sign up' />
+              <Button text='Sign up' disabled={disabledButton} />
             </div>
           </form>
         </div>
