@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes } from 'react';
 
-enum TypeButton {
+enum ButtonType {
   SUBMIT = 'submit',
   RESET = 'reset',
   BUTTON = 'button',
@@ -16,7 +16,7 @@ type Props = {
 export const Button = ({
   color = 'bg-indigo-600',
   text,
-  type = TypeButton.SUBMIT,
+  type = ButtonType.SUBMIT,
   disabled = false,
 }: Props) => {
   return (
