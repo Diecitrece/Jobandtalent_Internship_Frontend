@@ -5,6 +5,7 @@ import React, { useReducer } from 'react';
 import { Button } from 'components/UI/Button';
 import { UserRegister } from 'lib/models/user';
 import jobandtalent from 'public/jobandtalent.png';
+import { ErrorMsg } from 'components/UI/ErrorMsg';
 
 const Register: NextPage = () => {
   const INITIAL_VALUES: UserRegister = {
@@ -49,6 +50,7 @@ const Register: NextPage = () => {
     if (type === TypeInput.TEL) {
       !value.match(/^[0-9]{9,13}$/)
         ? dispatchInputValues({
+            value,
             [name]: {
               error: 'Phone numbers should be 9 or 13 digits in length only',
             },
@@ -121,11 +123,9 @@ const Register: NextPage = () => {
                   onBlur={handleErrors}
                 />
               </div>
-              {inputValues.firstName.error ? (
-                <div className='text-red-600'>
-                  {inputValues.firstName.error}
-                </div>
-              ) : null}
+              {inputValues.firstName.error && (
+                <ErrorMsg error={inputValues.firstName.error} />
+              )}
               <div>
                 <TextInput
                   name='surNames'
@@ -137,9 +137,9 @@ const Register: NextPage = () => {
                   onBlur={handleErrors}
                 />
               </div>
-              {inputValues.surNames.error ? (
-                <div className='text-red-600'>{inputValues.surNames.error}</div>
-              ) : null}
+              {inputValues.surNames.error && (
+                <ErrorMsg error={inputValues.surNames.error} />
+              )}
               <div>
                 <TextInput
                   name='email'
@@ -151,9 +151,9 @@ const Register: NextPage = () => {
                   onBlur={handleErrors}
                 />
               </div>
-              {inputValues.email.error ? (
-                <div className='text-red-600'>{inputValues.email.error}</div>
-              ) : null}
+              {inputValues.email.error && (
+                <ErrorMsg error={inputValues.email.error} />
+              )}
               <div>
                 <TextInput
                   name='password'
@@ -165,9 +165,9 @@ const Register: NextPage = () => {
                   onBlur={handleErrors}
                 />
               </div>
-              {inputValues.password.error ? (
-                <div className='text-red-600'>{inputValues.password.error}</div>
-              ) : null}
+              {inputValues.password.error && (
+                <ErrorMsg error={inputValues.password.error} />
+              )}
               <div>
                 <TextInput
                   name='confirmPassword'
@@ -180,11 +180,9 @@ const Register: NextPage = () => {
                   disabled={inputValues.password.value === ''}
                 />
               </div>
-              {inputValues.confirmPassword.error ? (
-                <div className='text-red-600'>
-                  {inputValues.confirmPassword.error}
-                </div>
-              ) : null}
+              {inputValues.confirmPassword.error && (
+                <ErrorMsg error={inputValues.confirmPassword.error} />
+              )}
               <div>
                 <TextInput
                   name='phone'
@@ -210,9 +208,9 @@ const Register: NextPage = () => {
                   onBlur={handleErrors}
                 />
               </div>
-              {inputValues.address.error ? (
-                <div className='text-red-600'>{inputValues.address.error}</div>
-              ) : null}
+              {inputValues.address.error && (
+                <ErrorMsg error={inputValues.address.error} />
+              )}
             </div>
             <div>
               <Button text='Sign up' disabled={disabledButton} />
