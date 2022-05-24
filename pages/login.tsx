@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Image from 'next/image';
-import { TextInput } from 'components/UI/TextInput';
+import { TextInput } from 'components/UI/Input';
 import { useState } from 'react';
 import { Button } from 'components/UI/Button';
 import { UserCredentials } from 'lib/models/user';

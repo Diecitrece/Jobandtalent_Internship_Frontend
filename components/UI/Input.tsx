@@ -1,15 +1,15 @@
-type Props = {
+export type InputProps = {
   name: string;
   label: string;
   type: string;
   placeholder: string;
   value: string;
   disabled?: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  pattern?: string;
 };
 
-export const TextInput = ({
+export const Input = ({
   name,
   label,
   type,
@@ -17,8 +17,8 @@ export const TextInput = ({
   value,
   disabled = false,
   onChange,
-  onBlur,
-}: Props) => {
+  pattern,
+}: InputProps) => {
   return (
     <>
       <label
@@ -38,7 +38,7 @@ export const TextInput = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        onBlur={onBlur}
+        pattern={pattern}
       />
     </>
   );

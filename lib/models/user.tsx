@@ -1,4 +1,4 @@
-type InputState = { value: string; error: string };
+import { InputState } from './form';
 
 export type UserRegister = {
   firstName: InputState;
