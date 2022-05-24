@@ -28,6 +28,9 @@ const Register: NextPage = () => {
       type: 'text',
       placeholder: 'First Name',
       value: '',
+      required: true,
+      minLength: 3,
+      maxLength: 20,
     },
     {
       name: 'surNames',
@@ -35,6 +38,9 @@ const Register: NextPage = () => {
       type: 'text',
       placeholder: 'Sur Name',
       value: '',
+      required: true,
+      minLength: 3,
+      maxLength: 30,
     },
     {
       name: 'email',
@@ -42,7 +48,8 @@ const Register: NextPage = () => {
       type: 'email',
       placeholder: 'Email',
       value: '',
-      pattern: '/^([w.%+-]+)@([w-]+.)+([w]{2,})$/i',
+      pattern: '^[\\w.%+-]+@([\\w-]+\\.)+[\\w]{2,}$',
+      required: true,
     },
     {
       name: 'password',
@@ -50,6 +57,9 @@ const Register: NextPage = () => {
       type: 'password',
       placeholder: 'Password',
       value: '',
+      required: true,
+      minLength: 6,
+      maxLength: 20,
     },
     {
       name: 'phone',
@@ -57,7 +67,8 @@ const Register: NextPage = () => {
       type: 'tel',
       placeholder: 'Phone',
       value: '',
-      pattern: '/^[0-9]{9,13}$/',
+      pattern: '^[0-9]{9,13}$',
+      required: true,
     },
     {
       name: 'address',
@@ -65,6 +76,9 @@ const Register: NextPage = () => {
       type: 'text',
       placeholder: 'Address',
       value: '',
+      required: true,
+      minLength: 3,
+      maxLength: 30,
     },
   ];
 
@@ -109,6 +123,10 @@ const Register: NextPage = () => {
                   placeholder={input.placeholder}
                   value={input.value}
                   onChange={handleChangeInput}
+                  required={input.required}
+                  minLength={input.minLength}
+                  maxLength={input.maxLength}
+                  pattern={input.pattern}
                 />
               ))}
             </div>
