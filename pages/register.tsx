@@ -64,9 +64,15 @@ const Register: NextPage = () => {
     },
   ];
 
-  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form submitted');
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+    console.log(
+      '🚀 ~ file: register.tsx ~ line 72 ~ handleOnSubmit ~ data',
+      data
+    );
   };
 
   return <Form inputs={inputs} onSubmit={handleOnSubmit} />;
