@@ -1,12 +1,11 @@
 import Image from 'next/image';
-import { TextInput } from 'components/UI/Input';
+import { Input } from 'components/UI/Input';
 import React, { useReducer } from 'react';
 import { Button } from 'components/UI/Button';
 import jobandtalent from 'public/jobandtalent.png';
 import { ErrorMsg } from 'components/UI/ErrorMsg';
-import { FormInput } from 'lib/models/form';
 
-export const Form = (fields: FormInput) => {
+export const Form = (fields: any) => {
   const INITIAL_VALUES = Object.keys(fields).map((field) => ({
     value: '',
     error: '',
@@ -82,9 +81,9 @@ export const Form = (fields: FormInput) => {
     console.log(inputValues);
   };
 
-  const disabledButton = Object.values(inputValues).some(
-    (value) => value.error
-  );
+  // const disabledButton = Object.values(inputValues).some(
+  //   (value) => value.error
+  // );
 
   return (
     <>
@@ -106,8 +105,8 @@ export const Form = (fields: FormInput) => {
           <form className='mt-8 space-y-6' onSubmit={handleOnSubmit}>
             <input type='hidden' name='remember' defaultValue='true' />
             <div className='rounded-md shadow-sm -space-y-px'>
-              {Object.entries(fields).map(([name, { type }]) => (
-                <TextInput
+              {/* {Object.entries(fields).map(([name, { type }]) => (
+                <Input
                   key={name}
                   name={name}
                   label={name}
@@ -118,13 +117,13 @@ export const Form = (fields: FormInput) => {
                   onChange={handleChangeInput}
                   onBlur={handleErrors}
                 />
-                // {inputValues.field.error && (
-                //   <ErrorMsg error={inputValues.field.error} />
-                // )}
-              ))}
+                {inputValues.field.error && (
+                  <ErrorMsg error={inputValues.field.error} />
+                )}
+              ))} */}
             </div>
             <div>
-              <Button text='Sign up' disabled={disabledButton} />
+              <Button text='Sign up' />
             </div>
           </form>
         </div>
