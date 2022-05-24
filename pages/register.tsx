@@ -5,10 +5,13 @@ import React, { useReducer } from 'react';
 import { Button } from 'components/UI/Button';
 import jobandtalent from 'public/jobandtalent.png';
 
-const reducerFn = (state: any[], payload: { name: any; value: any }) => {
+const reducerFn = (
+  state: InputProps[],
+  payload: { name: string; value: string }
+) => {
   const { name, value } = payload;
   state = state.map((field) => {
-    if (field.name == name) {
+    if (field.name === name) {
       field.value = value;
     }
     return field;
@@ -49,13 +52,6 @@ const Register: NextPage = () => {
       value: '',
     },
     {
-      name: 'confirmPassword',
-      label: 'Confirm Password',
-      type: 'password',
-      placeholder: 'Confirm Password',
-      value: '',
-    },
-    {
       name: 'phone',
       label: 'Phone',
       type: 'tel',
@@ -73,13 +69,6 @@ const Register: NextPage = () => {
   ];
 
   const [formState, dispatchInputValues] = useReducer(reducerFn, inputs);
-
-  const enum TypeInput {
-    TEXT = 'text',
-    EMAIL = 'email',
-    PASSWORD = 'password',
-    TEL = 'tel',
-  }
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
