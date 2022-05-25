@@ -75,7 +75,13 @@ const Register: NextPage = () => {
     );
   };
 
-  return <Form inputs={inputs} onSubmit={handleOnSubmit} />;
+  return (
+    <Form
+      inputs={inputs}
+      onSubmit={handleOnSubmit}
+      title='Sing up to our company'
+    />
+  );
 };
 
 export default Register;
