@@ -1,4 +1,8 @@
-export const ErrorMsg = ({ error }: { error: string }) => {
+type Props = {
+  message: string;
+};
+
+export const ErrorMsg = ({ message }: Props) => {
   return (
     <>
       <div
@@ -6,7 +10,7 @@ export const ErrorMsg = ({ error }: { error: string }) => {
         role='alert'
       >
         <p className='font-bold'>Be Warned</p>
-        <p>{error}</p>
+        <p>{message}</p>
       </div>
     </>
   );

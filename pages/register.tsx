@@ -1,6 +1,10 @@
 import type { NextPage } from 'next';
+import { useState } from 'react';
 import { InputProps } from 'components/UI/Input';
 import { Form } from 'components/Form';
+import { ErrorMsg } from 'components/UI/ErrorMsg';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const Register: NextPage = () => {
   const inputs: InputProps[] = [
@@ -64,37 +68,48 @@ const Register: NextPage = () => {
     },
   ];
 
+  const [errorMsg, setErrorMsg] = useState('');
+  const router = useRouter();
+
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
     const { remember, ...user } = data;
-    const response = fetch(`${process.env.API_URL}api/users`, {
+
+    const response = await fetch(`${process.env.API_URL}api/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(user)
-    })
-    .then((res) => {
-      if (res.status === 201) {
-        return res.json();
-      }
-      if (res.status === 400) {
-        return res.text();
-      }
-      return null;
+      body: JSON.stringify(user),
     });
-    console.log(await response)
+    if (response.status === 201) {
+      router.push('/login');
+    }
+    if (response.status === 400) {
+      setErrorMsg(await response.text());
+    }
   };
 
   return (
-    <Form
-      inputs={inputs}
-      onSubmit={handleOnSubmit}
-      title='Sing up to our company'
-    />
+    <>
+      {errorMsg && <ErrorMsg message={errorMsg} />}
+      <Form
+        inputs={inputs}
+        onSubmit={handleOnSubmit}
+        title='Sing up to our company'
+      />
+      <div className='text-center'>
+        <span className='text-muted'>Already have an account? </span>
+        <Link href='/login'>
+          <a className='text-muted font-weight-bold ml-1 text-sky-400'>
+            Log in
+          </a>
+        </Link>
+      </div>
+    </>
   );
 };
 

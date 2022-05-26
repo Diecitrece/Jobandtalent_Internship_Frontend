@@ -68,7 +68,7 @@ export const Form = ({ inputs, onSubmit, title }: FormProps) => {
               ))}
             </div>
             <div>
-              <Button text='Sign up' />
+              <Button text='GO!' />
             </div>
           </form>
         </div>
