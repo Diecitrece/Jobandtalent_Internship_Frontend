@@ -3,7 +3,7 @@ import { Input, InputProps } from './UI/Input';
 import Image from 'next/image';
 import { useReducer } from 'react';
 import jobandtalent from 'public/jobandtalent.png';
-import { FormTitle, FormtTitleProps } from './UI/formTitle';
+import { FormTitle } from './UI/FormTitle';
 
 type FormProps = {
   inputs: InputProps[];

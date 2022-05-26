@@ -69,10 +69,31 @@ const Register: NextPage = () => {
     const form = e.currentTarget;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
-    console.log(
-      '🚀 ~ file: register.tsx ~ line 72 ~ handleOnSubmit ~ data',
-      data
-    );
+    const { remember, ...user } = data;
+
+    await fetch(`${process.env.API_URL}api/users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    }).then((res) => {
+      if (res.status === 201) {
+        console.log(
+          '🚀 ~ file: register.tsx ~ line 83 ~ handleOnSubmit ~ res',
+          res
+        );
+        return res.json();
+      }
+      if (res.status === 400) {
+        console.log(
+          '🚀 ~ file: register.tsx ~ line 87 ~ handleOnSubmit ~ res',
+          res
+        );
+        return res.json();
+      }
+      return null;
+    });
   };
 
   return (
