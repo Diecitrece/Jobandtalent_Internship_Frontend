@@ -20,7 +20,10 @@ export const httpClient = {
   },
 };
 
-const getCookies = (): { [key: string]: string } => {
+export const getCookies = (): { [key: string]: string } => {
+  if (typeof window === 'undefined') {
+    return {};
+  }
   const cookies = document.cookie.split('; ');
   const result: { [key: string]: string } = {};
   cookies.forEach((cookie) => {
@@ -32,6 +35,11 @@ const getCookies = (): { [key: string]: string } => {
 };
 
 export const setCookies = (token: string, refreshToken: string) => {
-  document.cookie = `token=${token};`;
-  document.cookie = `refreshToken=${refreshToken};`;
+  document.cookie = `token=${token}; path=/;`;
+  document.cookie = `refreshToken=${refreshToken}; path=/;`;
+};
+
+export const logout = (): void => {
+  document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  document.cookie = `refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 };

@@ -1,10 +1,12 @@
 import type { NextPage } from 'next';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { InputProps } from 'components/UI/Input';
 import { Form } from 'components/Form';
 import { ErrorMsg } from 'components/UI/ErrorMsg';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { getCookies } from 'http-client/http-client';
+import { Spinner } from 'components/UI/spinner';
 
 const Register: NextPage = () => {
   const inputs: InputProps[] = [
@@ -69,7 +71,13 @@ const Register: NextPage = () => {
   ];
 
   const [errorMsg, setErrorMsg] = useState('');
+  const [canLoad, setCanLoad] = useState(false);
   const router = useRouter();
+  const cookies = getCookies();
+
+  useEffect(() => {
+    cookies.token ? router.push('/') : setCanLoad(true);
+  }, [cookies.token, router]);
 
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -85,6 +93,7 @@ const Register: NextPage = () => {
       },
       body: JSON.stringify(user),
     });
+
     if (response.status === 201) {
       router.push('/login');
     }
@@ -92,6 +101,10 @@ const Register: NextPage = () => {
       setErrorMsg(await response.text());
     }
   };
+
+  if (!canLoad) {
+    return <Spinner />;
+  }
 
   return (
     <>

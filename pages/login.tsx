@@ -4,12 +4,21 @@ import { Form } from 'components/Form';
 import { ErrorMsg } from 'components/UI/ErrorMsg';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { setCookies } from 'http-client/http-client';
+import { setCookies, getCookies } from 'http-client/http-client';
 import Link from 'next/link';
+import { useEffect } from 'react';
+import { Spinner } from 'components/UI/spinner';
 
 const Login: NextPage = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const router = useRouter();
+  const cookies = getCookies();
+  const [canLoad, setCanLoad] = useState(false);
+
+  useEffect(() => {
+    cookies.token ? router.push('/') : setCanLoad(true);
+  }, [cookies.token, router]);
+
   const inputs: InputProps[] = [
     {
       name: 'email',
@@ -42,14 +51,19 @@ const Login: NextPage = () => {
       body: JSON.stringify(loginData),
     });
     if (response.status === 200) {
-      const { token, refreshToken } = await response.json();
-      setCookies(token, refreshToken);
+      const { accessToken, refreshToken } = await response.json();
+      setCookies(accessToken, refreshToken);
       router.push('/');
     }
     if (response.status === 400) {
       setErrorMsg(await response.text());
     }
   };
+
+  if (!canLoad) {
+    return <Spinner />;
+  }
+
   return (
     <>
       {errorMsg && <ErrorMsg message={errorMsg} />}
