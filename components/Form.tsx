@@ -31,7 +31,8 @@ export const Form = ({ inputs, onSubmit, title }: FormProps) => {
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
-    dispatchInputValues({ name, value });
+    const valueWithoutSpaces = value.trim();
+    dispatchInputValues({ name, value: valueWithoutSpaces });
   };
 
   return (
