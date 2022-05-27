@@ -1,4 +1,4 @@
-import { getCookies, httpClient, logout, setCookies } from 'http-client';
+import { getCookies, logout } from 'http-client';
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import jobandtalent from 'public/jobandtalent.png';

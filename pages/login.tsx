@@ -41,14 +41,13 @@ const Login: NextPage = () => {
     const form = e.currentTarget;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
-    const { remember, ...loginData } = data;
 
     const response = await fetch(`${process.env.API_URL}api/users/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(loginData),
+      body: JSON.stringify(data),
     });
     if (response.status === 200) {
       const { accessToken, refreshToken } = await response.json();

@@ -84,14 +84,13 @@ const Register: NextPage = () => {
     const form = e.currentTarget;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
-    const { remember, ...user } = data;
 
     const response = await fetch(`${process.env.API_URL}api/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(data),
     });
 
     if (response.status === 201) {

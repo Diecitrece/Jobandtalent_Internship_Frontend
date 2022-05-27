@@ -50,7 +50,6 @@ export const Form = ({ inputs, onSubmit, title }: FormProps) => {
           </div>
           <FormTitle message={title} />
           <form className='mt-8 space-y-6' onSubmit={onSubmit}>
-            <input type='hidden' name='remember' defaultValue='true' />
             <div className='rounded-md shadow-sm -space-y-px'>
               {formState.map((input) => (
                 <Input
