@@ -5,8 +5,8 @@ import { Form } from 'components/Form';
 import { ErrorMsg } from 'components/UI/ErrorMsg';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { getCookies } from 'http-client/http-client';
-import { Spinner } from 'components/UI/spinner';
+import { getCookies } from 'http-client';
+import { Spinner } from 'components/UI/Spinner';
 
 const Register: NextPage = () => {
   const inputs: InputProps[] = [

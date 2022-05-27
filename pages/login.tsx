@@ -4,10 +4,10 @@ import { Form } from 'components/Form';
 import { ErrorMsg } from 'components/UI/ErrorMsg';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { setCookies, getCookies } from 'http-client/http-client';
+import { setCookies, getCookies } from 'http-client';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import { Spinner } from 'components/UI/spinner';
+import { Spinner } from 'components/UI/Spinner';
 
 const Login: NextPage = () => {
   const [errorMsg, setErrorMsg] = useState('');

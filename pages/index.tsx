@@ -1,16 +1,11 @@
-import {
-  getCookies,
-  httpClient,
-  logout,
-  setCookies,
-} from 'http-client/http-client';
+import { getCookies, httpClient, logout, setCookies } from 'http-client';
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import jobandtalent from 'public/jobandtalent.png';
 import { useRouter } from 'next/router';
 import { Button } from 'components/UI/Button';
 import { useEffect, useState } from 'react';
-import { Spinner } from 'components/UI/spinner';
+import { Spinner } from 'components/UI/Spinner';
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -49,19 +44,5 @@ const Home: NextPage = () => {
     </>
   );
 };
-
-// export const getServerSideProps = async (context) => {
-//   const response = await httpClient.get(
-//     `${process.env.API_URL}/api/admin/users`
-//   );
-//   if (response.status === 200) {
-//     return { props: { users: response } };
-//   }
-//   if (response.status === 201) {
-//     setCookies({ token: response.data.token });
-//     await httpClient.get(`${process.env.API_URL}/api/admin/users`);
-//     return { props: { users: response } };
-//   }
-// };
 
 export default Home;
